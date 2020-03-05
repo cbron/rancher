@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/rancher/rancher/pkg/auth/tokens"
 	"github.com/rancher/rancher/pkg/clusterrouter"
@@ -160,9 +161,13 @@ func (a *tokenAuthenticator) TokenFromRequest(req *http.Request) (*v3.Token, err
 	} else {
 		storedToken = objs[0].(*v3.Token)
 	}
+	fmt.Println("running verify")
+	start := time.Now()
 	if _, err := tokens.VerifyToken(storedToken, tokenName, tokenKey); err != nil {
+		fmt.Printf("err is %v", err)
 		return nil, err
 	}
+	fmt.Printf("time taken: %s \n ", time.Since(start))
 
 	return storedToken, nil
 }
