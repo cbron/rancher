@@ -80,16 +80,16 @@ require (
 	github.com/rancher/dynamiclistener v0.2.1-0.20200418023342-52ede5ec9234
 	github.com/rancher/kontainer-engine v0.0.4-dev.0.20200512184531-c395feca5b3b
 	github.com/rancher/machine v0.15.0-rancher25
-	github.com/rancher/norman v0.0.0-20200417060332-5c2a13443bb8
+	github.com/rancher/norman v0.0.0-20200520181341-ab75acb55410
 	github.com/rancher/rdns-server v0.0.0-20180802070304-bf662911db6a
 	github.com/rancher/remotedialer v0.2.6-0.20200401224317-04cc22157b83
 	github.com/rancher/rke v1.1.1
 	github.com/rancher/security-scan v0.1.7-0.20200222041501-f7377f127168
 	github.com/rancher/steve v0.0.0-20200416160046-0a5d0fbca1bc
 	github.com/rancher/system-upgrade-controller v0.3.1
-	github.com/rancher/types v0.0.0-20200410170911-a4f6ba0aa09d
-	github.com/rancher/wrangler v0.5.4-0.20200417162130-9817cb5fdf6b
-	github.com/rancher/wrangler-api v0.5.0
+	github.com/rancher/types v0.0.0-20200520234320-bbacbc0f8ea8
+	github.com/rancher/wrangler v0.5.4-0.20200520040055-b8d49179cfc8
+	github.com/rancher/wrangler-api v0.5.1-0.20200326194427-c13310506d04
 	github.com/robfig/cron v1.1.0
 	github.com/russellhaering/goxmldsig v0.0.0-20180122054445-a348271703b2 // indirect
 	github.com/satori/go.uuid v1.2.0
@@ -114,10 +114,10 @@ require (
 	gopkg.in/ldap.v2 v2.5.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0
 	gopkg.in/yaml.v2 v2.2.8
-	k8s.io/api v0.17.2
-	k8s.io/apiextensions-apiserver v0.17.2
-	k8s.io/apimachinery v0.17.2
-	k8s.io/apiserver v0.17.2
+	k8s.io/api v0.18.0
+	k8s.io/apiextensions-apiserver v0.18.0
+	k8s.io/apimachinery v0.18.0
+	k8s.io/apiserver v0.18.0
 	k8s.io/cli-runtime v0.17.2
 	k8s.io/client-go v12.0.0+incompatible
 	k8s.io/kubectl v0.17.2
