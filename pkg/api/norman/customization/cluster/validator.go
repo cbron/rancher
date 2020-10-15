@@ -59,6 +59,10 @@ func (v *Validator) Validator(request *types.APIContext, schema *types.Schema, d
 		return err
 	}
 
+	if err := v.handleEmbeddedCluster(request, &clusterSpec); err != nil {
+		return err
+	}
+
 	if err := v.validateK3sBasedVersionUpgrade(request, &clusterSpec); err != nil {
 		return err
 	}
@@ -216,6 +220,29 @@ func (v *Validator) validateEnforcement(request *types.APIContext, data map[stri
 		return err
 	}
 
+	return nil
+}
+
+// handleEmbeddedCluster validates that we are not performing operations on the "docker run" embedded k3s cluster
+func (v *Validator) handleEmbeddedCluster(request *types.APIContext, spec *v32.ClusterSpec) error {
+	if request.Method == http.MethodPost {
+		return nil
+	}
+	cluster, err := v.ClusterLister.Get("", request.ID)
+	if err != nil {
+		return err
+	}
+	if cluster.Status.Driver != v32.ClusterDriverLocal {
+		return nil // Not an embedded cluster, don't do any more checks
+	}
+	// must wait for original status version to be set
+	if cluster.Status.Version == nil {
+		return httperror.NewAPIError(httperror.Conflict, "version upgrade is not ready, try again later")
+	}
+	// If someone is attempting to upgrade the cluster don't let them
+	if cluster.Status.Version.GitVersion != spec.K3sConfig.Version {
+		return httperror.NewAPIError(httperror.Conflict, "embedded local cluster cannot be upgraded")
+	}
 	return nil
 }
 
