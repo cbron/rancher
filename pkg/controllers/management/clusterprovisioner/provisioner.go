@@ -1021,6 +1021,11 @@ func (p *Provisioner) k3sBasedClusterConfig(cluster *v3.Cluster, nodes []*v3.Nod
 		return nil //no-op
 	}
 
+	//if  {
+	//	return nil // don't attempt to modify the embedded k3s cluster
+	//}
+	isEmbedded := cluster.Status.Driver == apimgmtv3.ClusterDriverLocal
+
 	if strings.Contains(cluster.Status.Version.String(), "k3s") {
 		for _, node := range nodes {
 			if _, ok := node.Status.NodeLabels["k3os.io/mode"]; ok {
@@ -1032,7 +1037,7 @@ func (p *Provisioner) k3sBasedClusterConfig(cluster *v3.Cluster, nodes []*v3.Nod
 			cluster.Status.Driver = apimgmtv3.ClusterDriverK3s
 		}
 		// only set these values on init
-		if cluster.Spec.K3sConfig == nil {
+		if cluster.Spec.K3sConfig == nil && !isEmbedded {
 			cluster.Spec.K3sConfig = &apimgmtv3.K3sConfig{
 				Version: cluster.Status.Version.String(),
 			}
